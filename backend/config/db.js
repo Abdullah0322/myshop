@@ -3,6 +3,7 @@ import mongoose from 'mongoose'
 const connectDB = async () => {
   
   try {
+    console.log('Inside Db COnention', process.env.MONGO_URI)
     const conn = await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/prodstore', {
       useUnifiedTopology: true,
       useNewUrlParser: true,
