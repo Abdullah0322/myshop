@@ -1,9 +1,9 @@
 import mongoose from 'mongoose'
 
 const connectDB = async () => {
-  const MONGO_URI="mongodb://localhost:27017/prodstore"
+  
   try {
-    const conn = await mongoose.connect(MONGO_URI, {
+    const conn = await mongoose.connect(process.env.MONGO_URI||'mongodb://localhost:27017/prodstore', {
       useUnifiedTopology: true,
       useNewUrlParser: true,
       useCreateIndex: true,
