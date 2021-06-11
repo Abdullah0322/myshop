@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
@@ -36,6 +36,7 @@ const PlaceOrderScreen = ({ history }) => {
 
   const orderCreate = useSelector((state) => state.orderCreate)
   const { order, success, error } = orderCreate
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     if (success) {
@@ -57,7 +58,10 @@ const PlaceOrderScreen = ({ history }) => {
         taxPrice: cart.taxPrice,
         totalPrice: cart.totalPrice,
       })
+
     )
+    history.push('/')
+
   }
 
   return (
