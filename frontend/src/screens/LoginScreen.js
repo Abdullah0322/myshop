@@ -13,10 +13,8 @@ import { login } from '../actions/userActions'
 
 
 const LoginScreen = ({ location, history }) => {
-
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-
+const [user,setUser]=useState({email:'',password:''})
+  
   const dispatch = useDispatch()
 
   const userLogin = useSelector((state) => state.userLogin)
@@ -32,9 +30,18 @@ const LoginScreen = ({ location, history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault()
-    dispatch(login(email, password))
+    dispatch(login(user.email, user.password))
   }
+const onChange=(e)=>{
+setUser({
+...user,
+[e.target.name]:e.target.value
 
+})
+
+
+
+}
   return (
    
     <FormContainer>
@@ -45,20 +52,21 @@ const LoginScreen = ({ location, history }) => {
         <Form.Group controlId='email'>
           <Form.Label>Email Address</Form.Label>
           <Form.Control
-            type='email'
             placeholder='Enter email'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={user.email}
+            name="email"
+            onChange={onChange}
           ></Form.Control>
         </Form.Group>
 
         <Form.Group controlId='password'>
           <Form.Label>Password</Form.Label>
           <Form.Control
-            type='password'
+           type='password'
+           name="password"
             placeholder='Enter password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={user.password}
+            onChange={onChange}
           ></Form.Control>
         </Form.Group>
 

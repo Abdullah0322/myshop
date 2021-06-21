@@ -7,7 +7,6 @@ import { notFound, errorHandler } from './middleware/errorMiddleware.js'
 dotenv.config()
 console.log('DB COnnetion',process.env.MONGO_URI)
 import connectDB from './config/db.js'
-
 import productRoutes from './routes/productRoutes.js'
 import userRoutes from './routes/userRoutes.js'
 import orderRoutes from './routes/orderRoutes.js'
@@ -22,6 +21,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use(express.json())
+app.use(express.static('public'))
 
 app.use('/api/products', productRoutes)
 app.use('/api/users', userRoutes)

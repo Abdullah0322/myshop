@@ -9,11 +9,10 @@ import { listMyOrders } from '../actions/orderActions'
 import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
 
 const ProfileScreen = ({ location, history }) => {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
+
+  const[userdetail,setDetails]=useState({name:'',email:'',password:'',confirmPassword:''})
   const [message, setMessage] = useState(null)
+
 
   const dispatch = useDispatch()
 
@@ -28,8 +27,12 @@ const ProfileScreen = ({ location, history }) => {
 
   const orderListMy = useSelector((state) => state.orderListMy)
   const { loading: loadingOrders, error: errorOrders, orders } = orderListMy
+const name=userdetail.name;
+const email=userdetail.email;
+const password=userdetail.password;
 
   useEffect(() => {
+
     if (!userInfo) {
       history.push('/login')
     } else {
@@ -38,20 +41,30 @@ const ProfileScreen = ({ location, history }) => {
         dispatch(getUserDetails('profile'))
         dispatch(listMyOrders())
       } else {
-        setName(user.name)
-        setEmail(user.email)
+        setDetails(user.name)
+        setDetails(user.email)
       }
     }
   }, [dispatch, history, userInfo, user, success])
 
   const submitHandler = (e) => {
     e.preventDefault()
-    if (password !== confirmPassword) {
+    if (userdetail.password !== userdetail.confirmPassword) {
       setMessage('Passwords do not match')
     } else {
       dispatch(updateUserProfile({ id: user._id, name, email, password }))
     }
   }
+
+const onChange=(e)=>{
+setDetails({
+
+...userdetail,
+[e.target.name]:e.target.value
+
+})
+
+}
 
   return (
     <Row>
@@ -71,8 +84,9 @@ const ProfileScreen = ({ location, history }) => {
               <Form.Control
                 type='name'
                 placeholder='Enter name'
+                name="name"
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={onChange}
               ></Form.Control>
             </Form.Group>
 
@@ -81,8 +95,9 @@ const ProfileScreen = ({ location, history }) => {
               <Form.Control
                 type='email'
                 placeholder='Enter email'
+                name="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={onChange}
               ></Form.Control>
             </Form.Group>
 
@@ -91,8 +106,9 @@ const ProfileScreen = ({ location, history }) => {
               <Form.Control
                 type='password'
                 placeholder='Enter password'
+                name="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={onChange}
               ></Form.Control>
             </Form.Group>
 
@@ -101,8 +117,9 @@ const ProfileScreen = ({ location, history }) => {
               <Form.Control
                 type='password'
                 placeholder='Confirm password'
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                name="confirmPassword"
+                value={userdetail.confirmPassword}
+                onChange={onChange}
               ></Form.Control>
             </Form.Group>
 
